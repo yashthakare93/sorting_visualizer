@@ -1,14 +1,17 @@
-import './App.css';
-import SortingVisualizer from "./Components/SortingVisualizer";
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import SortingVisualizer from './Components/SortingVisualizer';
+import LandingPage from './Pages/LandingPage';
 
-
-
-function App() {
-  return (
-    <div className="App">
-        <SortingVisualizer/>
-    </div>
-  );
-}
+const App = () => {
+    return (
+        <Router>
+            <Routes>
+                <Route path="/" element={<LandingPage />} />
+                <Route path="/visualizer" element={<SortingVisualizer />} />
+            </Routes>
+        </Router>
+    );
+};
 
 export default App;
