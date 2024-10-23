@@ -5,7 +5,7 @@ import Sidebar from './SideBar';
 import AlgorithmInfo from './AlgorithmInfo';
 
 const SortingVisualizer = () => {
-    // Separate states for arrays of different algorithms
+    // State for managing arrays and algorithm selection
     const [arrays, setArrays] = useState({
         bubble: [],
         quick: [],
@@ -13,10 +13,11 @@ const SortingVisualizer = () => {
     });
     const [algorithm, setAlgorithm] = useState('bubble');
     const [sorting, setSorting] = useState(false);
-    const timeoutRef = useRef([]); // To store timeout references
+    const [arraySize, setArraySize] = useState(20); // New state for array size
+    const timeoutRef = useRef([]); // Store timeout references for animation
 
     // Function to generate a random array
-    const generateArray = (size = 20) => {
+    const generateArray = (size) => {
         const newArray = Array.from({ length: size }, () => Math.floor(Math.random() * 100));
         setArrays((prev) => ({
             ...prev,
@@ -25,7 +26,7 @@ const SortingVisualizer = () => {
         setSorting(false); // Reset sorting when generating a new array
     };
 
-    // Handle sorting based on the selected algorithm
+    // Function to handle sorting based on the selected algorithm
     const handleSort = async () => {
         if (sorting) {
             // Clear previous sorting if already sorting
@@ -92,12 +93,29 @@ const SortingVisualizer = () => {
             <Sidebar algorithm={algorithm} setAlgorithm={setAlgorithm} />
             <div className="flex-grow p-4">
                 <h1 className="text-2xl font-bold mb-4">Sorting Visualizer</h1>
+
+                {/* Dropdown to select array size */}
+                <label htmlFor="arraySize" className="mr-2">Select Array Size:</label>
+                <select
+                    id="arraySize"
+                    value={arraySize}
+                    onChange={(e) => setArraySize(Number(e.target.value))} // Update array size based on user selection
+                    className="mt-4 px-4 py-2 border border-gray-300 rounded"
+                >
+                    <option value={10}>10</option>
+                    <option value={20}>20</option>
+                    <option value={30}>30</option>
+                    <option value={40}>40</option>
+                    <option value={50}>50</option>
+                </select>
+
                 <button
-                    onClick={() => generateArray(20)} // Generate new array for the selected algorithm
-                    className="mt-4 px-4 py-2 text-white bg-green-500 hover:bg-green-600 rounded"
+                    onClick={() => generateArray(arraySize)} // Generate new array for the selected algorithm
+                    className="mt-4 ml-2 px-4 py-2 text-white bg-green-500 hover:bg-green-600 rounded"
                 >
                     Generate New Array
                 </button>
+
                 <button
                     onClick={handleSort} // Use the current selected algorithm
                     disabled={sorting || arrays[algorithm].length === 0} // Disable if sorting or no array is generated
@@ -105,11 +123,12 @@ const SortingVisualizer = () => {
                 >
                     Sort
                 </button>
+
                 <div className="flex flex-col space-y-4 mt-4">
                     {/* Render a graph for the selected sorting algorithm */}
                     <BarGraph array={arrays[algorithm]} sorting={sorting} algorithm={algorithm} />
                 </div>
-                {algorithm && <AlgorithmInfo algorithm={algorithm} />}
+                {algorithm && <AlgorithmInfo algorithm={algorithm} />} {/* Display algorithm info */}
             </div>
         </div>
     );
