@@ -1,3 +1,4 @@
+
 package com.example.sorting_visualizer.algorithm;
 
 import org.springframework.stereotype.Component;

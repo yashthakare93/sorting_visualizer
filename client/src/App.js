@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import SortingVisualizer from './Components/SortingVisualizer';
 import LandingPage from './Pages/LandingPage';
+import Contact from "./Components/Contact";
 
 const App = () => {
     return (
@@ -9,6 +10,7 @@ const App = () => {
             <Routes>
                 <Route path="/" element={<LandingPage />} />
                 <Route path="/visualizer" element={<SortingVisualizer />} />
+                <Route path="/Contact" element={<Contact />} />
             </Routes>
         </Router>
     );

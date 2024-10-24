@@ -1,12 +1,14 @@
-import { Link } from 'react-router-dom';
+import React from 'react';
+import NavBar from '../Components/NavBar';
+import HeroSection from '../Components/HeroSection';
+import Footer from '../Components/Footer';
 
 const LandingPage = () => {
     return (
-        <div>
-            <h1>Welcome to the Sorting Visualizer</h1>
-            <Link to="/visualizer">
-                <button className="btn">Go to Visualizer</button>
-            </Link>
+        <div className="bg-white min-h-screen flex flex-col">
+            <NavBar />
+            <HeroSection />
+            <Footer />
         </div>
     );
 };
