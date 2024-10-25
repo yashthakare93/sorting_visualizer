@@ -18,7 +18,7 @@ const Contact = () => {
                 <div className="p-4 border rounded-lg shadow hover:shadow-lg transition-shadow duration-300">
                     <h3 className="text-xl font-semibold text-gray-800 mb-2">Mobile</h3>
                     <p className="text-gray-600">You can reach me via phone.</p>
-                    <a href="tel:+919123456789" className="text-indigo-600 hover:underline">
+                    <a href="tel:+919356978166" className="text-indigo-600 hover:underline">
                         +91 9356978166
                     </a>
                 </div>

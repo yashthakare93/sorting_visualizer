@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import BarGraph from './BarGraph';
-import SideBar from './SideBar'; // Make sure this path is correct
+import SideBar from './SideBar';
 import AlgorithmInfo from './AlgorithmInfo';
 import SortButton from './SortButton';
 import GenerateArrayButton from "./GenerateArrayButton";
@@ -11,25 +11,42 @@ const SortingVisualizer = () => {
         quick: [],
         merge: [],
     });
+    const [steps, setSteps] = useState([]);
+    const [currentStep, setCurrentStep] = useState(0);
     const [algorithm, setAlgorithm] = useState('bubble');
     const [sorting, setSorting] = useState(false);
     const [arraySize, setArraySize] = useState(50);
-    const timeoutRef = useRef([]);
+    const [isSorted, setIsSorted] = useState(false);
+    const [speed, setSpeed] = useState(350);
+    const [customArrayInput, setCustomArrayInput] = useState(''); // State for custom input
+    const timeoutRef = useRef(null);
 
     // Function to generate a random array
     const generateArray = (size) => {
         const newArray = Array.from({ length: size }, () => Math.floor(Math.random() * 100));
         setArrays((prev) => ({ ...prev, [algorithm]: newArray }));
         setSorting(false);
+        setSteps([]);
+        setCurrentStep(0);
+        setIsSorted(false);
+        if (timeoutRef.current) {
+            clearTimeout(timeoutRef.current);
+        }
     };
 
-    const handleSort = async () => {
-        if (sorting) {
-            timeoutRef.current.forEach((timeoutId) => clearTimeout(timeoutId));
-            timeoutRef.current = [];
-            setSorting(false);
-        }
+    // Function to set custom array
+    const handleCustomArray = () => {
+        const customArray = customArrayInput.split(',').map(num => parseInt(num.trim(), 10)).filter(num => !isNaN(num));
+        setArrays((prev) => ({ ...prev, [algorithm]: customArray }));
+        setSorting(false);
+        setSteps([]);
+        setCurrentStep(0);
+        setIsSorted(false);
+        setCustomArrayInput(''); // Clear input after setting the array
+    };
 
+    // Function to handle sorting
+    const handleSort = async () => {
         setSorting(true);
         try {
             const response = await fetch(`/api/sort/${algorithm}`, {
@@ -45,35 +62,38 @@ const SortingVisualizer = () => {
             }
 
             const data = await response.json();
-            data.forEach((step, i) => {
-                const timeoutId = setTimeout(() => {
-                    setArrays((prev) => ({
-                        ...prev,
-                        [algorithm]: step,
-                    }));
-                }, i * 500);
-                timeoutRef.current.push(timeoutId);
-            });
+            setSteps(data);
+            setCurrentStep(0);
+            setIsSorted(true);
 
-            const totalTimeout = setTimeout(() => {
-                setSorting(false);
-                timeoutRef.current = [];
-            }, data.length * 500);
-            timeoutRef.current.push(totalTimeout);
+            // Start sorting animation
+            runSortAnimation(data);
         } catch (error) {
             console.error("Sorting error:", error);
             setSorting(false);
         }
     };
 
-    // Effect to handle algorithm change
+    // Function to handle the animation of sorting
+    const runSortAnimation = (sortingSteps) => {
+        let stepIndex = 0;
+
+        const animate = () => {
+            if (stepIndex < sortingSteps.length) {
+                setCurrentStep(stepIndex);
+                stepIndex++;
+                timeoutRef.current = setTimeout(animate, speed); // Use speed parameter
+            } else {
+                setSorting(false); // Sorting is done
+            }
+        };
+
+        animate();
+    };
+
     useEffect(() => {
-        if (sorting) {
-            timeoutRef.current.forEach((timeoutId) => clearTimeout(timeoutId));
-            setSorting(false);
-        }
         generateArray(arraySize);
-    }, [algorithm, arraySize]); // Include arraySize in the dependency array
+    }, [algorithm, arraySize]);
 
     return (
         <div className="flex h-screen">
@@ -97,19 +117,52 @@ const SortingVisualizer = () => {
                             <option value={40}>40</option>
                             <option value={50}>50</option>
                         </select>
+
+                        <label htmlFor="speed" className="ml-4 mr-2">Select Speed:</label>
+                        <select
+                            id="speed"
+                            value={speed}
+                            onChange={(e) => setSpeed(Number(e.target.value))}
+                            className="px-4 py-2 border border-gray-300 rounded"
+                        >
+                            <option value={50}>Fast</option>
+                            <option value={350}>Normal</option>
+                            <option value={450}>Slow</option>
+                        </select>
                     </div>
                     <div className="flex space-x-2">
                         <GenerateArrayButton onClick={generateArray} arraySize={arraySize} />
                         <SortButton
                             onClick={handleSort}
                             disabled={sorting || arrays[algorithm].length === 0}
-                        />
+                        >
+                            {sorting ? 'Sorting in Progress...' : isSorted ? 'Sorting Completed!' : 'Sort'}
+                        </SortButton>
                     </div>
                 </div>
 
-                <div className="flex flex-col space-y-4 mt-4 pt-5 pb-5">
-                    <BarGraph array={arrays[algorithm]} sorting={sorting} algorithm={algorithm} />
+                {/* Custom Array Input Section */}
+                <div className="mt-4">
+                    <label htmlFor="customArray" className="mr-2">Custom Array (comma-separated):</label>
+                    <input
+                        id="customArray"
+                        type="text"
+                        value={customArrayInput}
+                        onChange={(e) => setCustomArrayInput(e.target.value)}
+                        className="px-4 py-2 border border-gray-300 rounded w-1/3"
+                    />
+                    <button
+                        onClick={handleCustomArray}
+                        className="ml-2 px-4 py-2 rounded bg-green-500 text-white"
+                    >
+                        Set Custom Array
+                    </button>
                 </div>
+
+                <div className="flex flex-col space-y-4 mt-4 pt-5 pb-5">
+                    <BarGraph array={steps[currentStep] || arrays[algorithm]} sorting={sorting} />
+                </div>
+
                 {algorithm && <AlgorithmInfo algorithm={algorithm} />}
             </div>
         </div>
