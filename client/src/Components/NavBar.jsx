@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Navbar = () => {
+const NavBar = () => {
     return (
         <header className="absolute top-0 left-0 w-full">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex justify-between items-center">
@@ -18,17 +18,10 @@ const Navbar = () => {
                         Contact
                     </a>
                 </nav>
-                <div>
-                    <a
-                        href="/visualizer"
-                        className="bg-indigo-600 text-white px-4 py-2 rounded-lg text-base font-medium hover:bg-indigo-700"
-                    >
-                        Get Started
-                    </a>
-                </div>
+
             </div>
         </header>
     );
 };
 
-export default Navbar;
+export default NavBar;

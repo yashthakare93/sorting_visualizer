@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import SortingVisualizer from './Components/SortingVisualizer';
 import LandingPage from './Pages/LandingPage';
 import Contact from "./Components/Contact";
+import './index.css'
 
 const App = () => {
     return (

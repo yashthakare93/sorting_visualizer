@@ -1,24 +1,114 @@
 import React from 'react';
+import { motion } from 'framer-motion';
 
 const HeroSection = () => {
+    const letters = "Visualize Sorting Algorithms".split("");
+
+    const variants = {
+        initial: { opacity: 0 },
+        animate: {
+            opacity: 1,
+            transition: {
+                staggerChildren: 0.04,
+            },
+        },
+    };
+
+    const letterVariants = {
+        initial: { opacity: 0, y: 20 },
+        animate: {
+            opacity: 1,
+            y: 0,
+            transition: {
+                type: "spring",
+                stiffness: 300,
+                damping: 20,
+            },
+        },
+    };
+
+    const features = [
+        'Real-Time Visualization',
+        'Speed Control',
+        'Step-by-Step Execution',
+        'Animation Speed Adjustment',
+        'Trace Path Highlighting',
+        'Dynamic Data Generation',
+        'Memory Usage Display',
+        'Performance Analysis',
+    ];
+
     return (
-        <main className="flex-grow mt-20">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-2 gap-8 items-center py-24">
-                {/* Text Content */}
-                <div className="space-y-6">
-                    <h1 className="text-5xl font-extrabold text-gray-900">
-                        Visualize Sorting Algorithms
-                    </h1>
-                    <p className="text-lg text-gray-500">
-                        A platform to help you understand and explore different sorting algorithms like Bubble Sort, Merge Sort, and more.
-                    </p>
-                    <div>
-                        <a
-                            href="/visualizer"
-                            className="bg-indigo-600 text-white px-6 py-3 rounded-lg text-lg font-medium hover:bg-indigo-700"
+        <main className="flex-grow mt-20 text-white flex flex-col items-center justify-center">
+            <div className="max-w-7xl mx-auto px-6 py-20 sm:px-10 lg:px-14">
+                {/* Title Section */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-start">
+                    <div className="space-y-6 text-center md:text-left">
+                        <motion.h1
+                            className="text-5xl font-extrabold leading-tight tracking-tight"
+                            initial="initial"
+                            animate="animate"
+                            variants={variants}
                         >
-                            Try the Visualizer
-                        </a>
+                            {letters.map((letter, index) => (
+                                <motion.span key={index} variants={letterVariants}>
+                                    {letter}
+                                </motion.span>
+                            ))}
+                        </motion.h1>
+                        <p className="text-lg text-gray-400 max-w-md mx-auto md:mx-0">
+                            A platform to help you understand and explore different sorting algorithms with interactive features.
+                        </p>
+                        <div className="pt-4">
+                            <a
+                                href="/visualizer"
+                                className="bg-indigo-600 text-white px-8 py-3 rounded-lg text-lg font-medium hover:bg-indigo-700 transition duration-300"
+                            >
+                                Try the Visualizer
+                            </a>
+                        </div>
+                    </div>
+
+                    {/* Feature List */}
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 md:gap-8 lg:gap-10">
+                        {features.map((feature, index) => (
+                            <motion.div
+                                key={index}
+                                initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }} // Alternating directions
+                                animate={{ opacity: 1, x: 0 }}
+                                transition={{
+                                    delay: index * 0.15,
+                                    duration: 0.6,
+                                    ease: "easeInOut",
+                                }}
+                                className="flex items-center bg-gray-800 rounded-lg p-4 shadow-lg"
+                            >
+                                <motion.div
+                                    className="mr-3 text-indigo-500"
+                                    initial={{ scale: 0, opacity: 0 }}
+                                    animate={{ scale: 1, opacity: 1 }}
+                                    transition={{
+                                        delay: index * 0.15 + 0.1,
+                                        duration: 0.4,
+                                        ease: "easeOut",
+                                    }}
+                                >
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        viewBox="0 0 24 24"
+                                        fill="currentColor"
+                                        className="h-6 w-6"
+                                    >
+                                        <path
+                                            fillRule="evenodd"
+                                            d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12Zm13.36-1.814a.75.75 0 1 0-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 0 0-1.06 1.06l2.25 2.25a.75.75 0 0 0 1.14-.094l3.75-5.25Z"
+                                            clipRule="evenodd"
+                                        />
+                                    </svg>
+                                </motion.div>
+                                <span className="text-lg text-gray-200 font-medium">{feature}</span>
+                            </motion.div>
+                        ))}
                     </div>
                 </div>
             </div>
