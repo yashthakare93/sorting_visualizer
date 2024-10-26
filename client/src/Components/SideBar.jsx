@@ -13,7 +13,7 @@ const SideBar = ({ algorithm, setAlgorithm }) => {
     ];
 
     return (
-        <div className="w-64 bg-gray-800 text-white p-4">
+        <div className="w-64 bg-gray-800 text-white p-4 h-full">
             <div className="flex items-center">
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
