@@ -1,11 +1,9 @@
 package com.example.sorting_visualizer.service;
 
+import com.example.sorting_visualizer.algorithm.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
-import com.example.sorting_visualizer.algorithm.BubbleSort;
-import com.example.sorting_visualizer.algorithm.MergeSort;
-import com.example.sorting_visualizer.algorithm.QuickSort;
 
 @Service
 public class SortService {
@@ -18,6 +16,12 @@ public class SortService {
     @Autowired
     private MergeSort mergeSort;
 
+    @Autowired
+    private InsertionSort insertionSort;
+
+    @Autowired
+    private SelectionSort selectionSort;
+
     public List<int[]> sortWithBubble(int[] array) {
         return bubbleSort.sort(array);
     }
@@ -28,5 +32,13 @@ public class SortService {
 
     public List<int[]> sortWithMerge(int[] array) {
         return mergeSort.sort(array);
+    }
+
+    public List<int[]> sortWithInsertion(int[] array) {
+        return insertionSort.sort(array);
+    }
+
+    public List<int[]> sortWithSelection(int[] array) {
+        return selectionSort.sort(array);
     }
 }

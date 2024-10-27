@@ -10,6 +10,8 @@ const SortingVisualizer = () => {
         bubble: [],
         quick: [],
         merge: [],
+        selection: [],
+        insertion: [],
     });
     const [steps, setSteps] = useState([]);
     const [currentStep, setCurrentStep] = useState(0);
@@ -124,6 +126,8 @@ const SortingVisualizer = () => {
                         <option value="bubble">Bubble Sort</option>
                         <option value="quick">Quick Sort</option>
                         <option value="merge">Merge Sort</option>
+                        <option value="selection">Selection Sort</option>
+                        <option value="insertion">Insertion Sort</option>
                     </select>
                 </div>
 

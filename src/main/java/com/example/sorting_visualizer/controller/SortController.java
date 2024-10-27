@@ -25,4 +25,14 @@ public class SortController {
     public List<int[]> mergeSort(@RequestBody int[] array) {
         return sortService.sortWithMerge(array);
     }
+
+    @PostMapping("/insertion")
+    public List<int[]> insertionSort(@RequestBody int[] array) {
+        return sortService.sortWithInsertion(array);
+    }
+
+    @PostMapping("/selection")
+    public List<int[]> selectionSort(@RequestBody int[] array) {
+        return sortService.sortWithSelection(array);
+    }
 }

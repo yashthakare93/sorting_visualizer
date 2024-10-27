@@ -15,8 +15,8 @@ const NavBar = () => {
                     Sorting Visualizer
                 </div>
                 <nav className="hidden lg:flex space-x-12">
-                    <NavItem href="/github" label="Github"/>
-                    <NavItem href="/portfolio" label="Portfolio"/>
+                    <NavItem href="https://github.com/yashthakare93" target="_blank" rel="noopener noreferrer"  label="Github"/>
+                    <NavItem href="https://yashthakare.vercel.app/" target="_blank" rel="noopener noreferrer"  label="Portfolio"/>
                     <NavItem href="/features" label="Features"/>
                     <NavItem href="/contact" label="Contact"/>
                 </nav>
