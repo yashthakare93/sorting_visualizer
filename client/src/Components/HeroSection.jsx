@@ -2,7 +2,9 @@ import React from 'react';
 import { motion } from 'framer-motion';
 
 const HeroSection = () => {
-    const letters = "Visualize Sorting Algorithms".split("");
+    const letters = "Visualize ".split("").concat(
+        <span className="font-bold text-purple-600 font-serif rounded px-1">Sorting Algorithms</span>
+    );
 
     const variants = {
         initial: { opacity: 0 },
@@ -28,24 +30,24 @@ const HeroSection = () => {
     };
 
     const features = [
-        'Real-Time Visualization',
-        'Speed Control',
-        'Step-by-Step Execution',
-        'Animation Speed Adjustment',
-        'Trace Path Highlighting',
-        'Dynamic Data Generation',
-        'Memory Usage Display',
-        'Performance Analysis',
+        'Real-Time Visualization of Sorting Steps',
+        'Adjustable Speed Control for Animations',
+        'Step-by-Step Execution for Learning',
+        'Customizable Animation Speed Adjustment',
+        'Compare Different Sorting Algorithms Side-by-Side',
+        'Dynamic Data Generation for Unique Scenarios',
+        'Display of Time Complexity ',
+        'Educational Tooltips for Algorithm Insights'
     ];
 
     return (
         <main className="flex-grow mt-20 text-white flex flex-col items-center justify-center">
             <div className="max-w-7xl mx-auto px-6 py-20 sm:px-10 lg:px-14">
-                {/* Title Section */}
+                {/* Main Content Section */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-start">
                     <div className="space-y-6 text-center md:text-left">
                         <motion.h1
-                            className="text-5xl font-extrabold leading-tight tracking-tight"
+                            className="text-5xl font-serif font-extrabold leading-tight tracking-tight"
                             initial="initial"
                             animate="animate"
                             variants={variants}
@@ -57,24 +59,24 @@ const HeroSection = () => {
                             ))}
                         </motion.h1>
                         <p className="text-lg text-gray-400 max-w-md mx-auto md:mx-0">
-                            A platform to help you understand and explore different sorting algorithms with interactive features.
+                            Discover and interact with Sorting Algorithms through
+                            an immersive, feature-rich platform designed to enhance your understanding.
                         </p>
                         <div className="pt-4">
                             <a
                                 href="/visualizer"
                                 className="bg-indigo-600 text-white px-8 py-3 rounded-lg text-lg font-medium hover:bg-indigo-700 transition duration-300"
                             >
-                                Try the Visualizer
+                                Explore the Visualizer
                             </a>
                         </div>
                     </div>
-
                     {/* Feature List */}
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 md:gap-8 lg:gap-10">
+                    <div className="hidden lg:grid grid-cols-1 sm:grid-cols-2 gap-6 md:gap-8 lg:gap-10">
                         {features.map((feature, index) => (
                             <motion.div
                                 key={index}
-                                initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }} // Alternating directions
+                                initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
                                 animate={{ opacity: 1, x: 0 }}
                                 transition={{
                                     delay: index * 0.15,

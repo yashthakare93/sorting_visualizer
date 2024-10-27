@@ -26,11 +26,11 @@ const LandingPage = () => {
             <HeroSection />
 
             {/* Comparison Section */}
-            <div className="flex flex-col items-center my-16">
+            <div className="hidden lg:flex flex-col items-center my-16">
                 {algorithms.map((algorithm, index) => (
-                    <div key={algorithm} className={`flex items-center w-full max-w-4xl p-4 border rounded-3xl dark:bg-neutral-900 bg-neutral-100 border-neutral-200 dark:border-neutral-800 text-center mb-8 ${index % 2 === 0 ? 'justify-start' : 'justify-end'}`}>
+                    <div key={algorithm} className={`flex items-center  w-full max-w-4xl p-4  rounded-3xl dark:bg-neutral-900 bg-neutral-100 border-neutral-200 dark:border-neutral-800 text-center mb-8 ${index % 2 === 0 ? 'justify-start' : 'justify-end'}`}>
                         {/* Left Image */}
-                        <div className="flex-1 flex flex-col items-center">
+                        <div className="flex-1  flex flex-col items-center">
                             <h2 className="text-black font-serif font-bold text-2xl mb-2">Understanding {algorithm.charAt(0).toUpperCase() + algorithm.slice(1)} Sort</h2>
                             <ImageComparison
                                 leftImage={algorithmImages[algorithm].leftImage}
